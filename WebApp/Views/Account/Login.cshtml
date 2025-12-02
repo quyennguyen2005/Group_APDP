@@ -1,0 +1,62 @@
+@model WebApp.ViewModels.LoginInput
+
+@{
+    ViewData["Title"] = "Đăng nhập";
+    var visitorName = ViewBag.VisitorName as string;
+    var message = ViewBag.LoginMessage as string;
+}
+
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <div class="auth-title">
+            <div class="brand-logo text-decoration-none mb-2">
+                <span class="brand-accent">BTEC</span>
+                <span class="brand-sub">FPT Education</span>
+            </div>
+            <h1>Đăng nhập</h1>
+            <p class="text-muted">Vui lòng đăng nhập để tiếp tục</p>
+        </div>
+
+        @if (!string.IsNullOrEmpty(visitorName))
+        {
+            <div class="alert alert-success">Xin chào @visitorName! Vui lòng đăng nhập để tiếp tục.</div>
+        }
+        @if (!string.IsNullOrEmpty(message))
+        {
+            <div class="alert alert-info">@message</div>
+        }
+
+        <form asp-action="Login" method="post" class="d-flex flex-column gap-3">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div>
+                <label asp-for="Username" class="form-label"></label>
+                <div class="input-group">
+                    <span class="input-group-text bg-white border-end-0 text-muted">👤</span>
+                    <input asp-for="Username" class="form-control border-start-0" />
+                </div>
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="Password" class="form-label"></label>
+                <div class="input-group">
+                    <span class="input-group-text bg-white border-end-0 text-muted">🔒</span>
+                    <input asp-for="Password" class="form-control border-start-0" type="password" />
+                </div>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg">Đăng nhập</button>
+        </form>
+
+        <div class="mt-4 text-center link-muted">
+            Chưa có tài khoản? <a asp-action="Register">Đăng ký ngay</a>
+        </div>
+        <div class="text-center mt-2">
+            <a asp-controller="Welcome" asp-action="Index" class="link-muted">&larr; Quay lại trang chào mừng</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
