@@ -1,0 +1,259 @@
+@{
+    Layout = "_DashboardLayout";
+    ViewData["Title"] = "Hồ sơ cá nhân";
+    
+    var userAccount = ViewBag.UserAccount as WebApp.Models.UserAccount;
+    var student = ViewBag.Student as WebApp.Models.Student;
+    var instructor = ViewBag.Instructor as WebApp.Models.Instructor;
+    var department = ViewBag.Department as WebApp.Models.Department;
+    
+    var displayName = instructor?.FullName ?? student?.FullName ?? userAccount?.Username ?? "Người dùng";
+    var role = userAccount?.Role ?? "User";
+    var initials = string.Join("", displayName.Split(' ').Select(n => n[0]).Take(2)).ToUpper();
+}
+
+<div class="profile-container">
+    <div class="profile-header">
+        <div class="profile-avatar-large">
+            @initials
+        </div>
+        <div class="profile-info">
+            <h1 class="profile-name">@displayName</h1>
+            <p class="profile-role">@role</p>
+            @if (department != null)
+            {
+                <p class="profile-department">@department.Name</p>
+            }
+        </div>
+        <div class="profile-actions">
+            <a asp-action="Edit" class="btn btn-primary">
+                <span>✏️</span> Chỉnh sửa
+            </a>
+        </div>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="profile-content">
+        <div class="profile-section">
+            <h3>Thông tin tài khoản</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <label>Tên đăng nhập:</label>
+                    <span>@userAccount?.Username</span>
+                </div>
+                <div class="info-item">
+                    <label>Email:</label>
+                    <span>@userAccount?.Email</span>
+                </div>
+                <div class="info-item">
+                    <label>Vai trò:</label>
+                    <span>@role</span>
+                </div>
+            </div>
+        </div>
+
+        @if (student != null)
+        {
+            <div class="profile-section">
+                <h3>Thông tin sinh viên</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label>Mã sinh viên:</label>
+                        <span>@student.StudentCode</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Họ tên:</label>
+                        <span>@student.FullName</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Email:</label>
+                        <span>@student.Email</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Chuyên ngành:</label>
+                        <span>@student.Major</span>
+                    </div>
+                    <div class="info-item">
+                        <label>GPA:</label>
+                        <span>@student.Gpa.ToString("0.00")</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Tổng tín chỉ:</label>
+                        <span>@student.TotalCredits</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Ngày nhập học:</label>
+                        <span>@student.EnrollmentDate.ToString("dd/MM/yyyy")</span>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if (instructor != null)
+        {
+            <div class="profile-section">
+                <h3>Thông tin giảng viên</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label>Họ tên:</label>
+                        <span>@instructor.FullName</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Email:</label>
+                        <span>@instructor.Email</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Số điện thoại:</label>
+                        <span>@instructor.PhoneNumber</span>
+                    </div>
+                    @if (department != null)
+                    {
+                        <div class="info-item">
+                            <label>Khoa:</label>
+                            <span>@department.Name</span>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+.profile-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.profile-header {
+    background: #fff;
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.profile-avatar-large {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: #2f4bf4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+}
+
+.profile-info {
+    flex: 1;
+}
+
+.profile-actions {
+    display: flex;
+    align-items: center;
+}
+
+.profile-actions .btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.profile-actions .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(47, 75, 244, 0.3);
+}
+
+.profile-name {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
+    color: var(--text-dark);
+}
+
+.profile-role {
+    font-size: 1.125rem;
+    color: var(--text-muted);
+    margin: 0 0 0.25rem 0;
+}
+
+.profile-department {
+    font-size: 0.95rem;
+    color: var(--primary);
+    margin: 0;
+}
+
+.profile-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.profile-section {
+    background: #fff;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.profile-section h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 1.5rem 0;
+    color: var(--text-dark);
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.info-item label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.info-item span {
+    font-size: 1rem;
+    color: var(--text-dark);
+    font-weight: 500;
+}
+</style>
+
