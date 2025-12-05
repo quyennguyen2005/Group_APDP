@@ -37,7 +37,7 @@ public class StudentsController : Controller
     {
         if (!AuthorizationHelper.IsAdminOrInstructor(HttpContext.Session))
         {
-            TempData["ErrorMessage"] = "Bạn không có quyền thêm sinh viên. Chỉ có Admin và Giảng viên mới có quyền này.";
+            TempData["ErrorMessage"] = "You do not have permission to add students. Only Admin and Instructors have this permission.";
             return RedirectToAction(nameof(Index));
         }
         return View(new Student());
@@ -49,7 +49,7 @@ public class StudentsController : Controller
     {
         if (!AuthorizationHelper.IsAdminOrInstructor(HttpContext.Session))
         {
-            TempData["ErrorMessage"] = "Bạn không có quyền thêm sinh viên. Chỉ có Admin và Giảng viên mới có quyền này.";
+            TempData["ErrorMessage"] = "You do not have permission to add students. Only Admin and Instructors have this permission.";
             return RedirectToAction(nameof(Index));
         }
 
@@ -68,7 +68,7 @@ public class StudentsController : Controller
     {
         if (!AuthorizationHelper.IsAdminOrInstructor(HttpContext.Session))
         {
-            TempData["ErrorMessage"] = "Bạn không có quyền sửa sinh viên. Chỉ có Admin và Giảng viên mới có quyền này.";
+            TempData["ErrorMessage"] = "You do not have permission to edit students. Only Admin and Instructors have this permission.";
             return RedirectToAction(nameof(Index));
         }
 
@@ -86,7 +86,7 @@ public class StudentsController : Controller
     {
         if (!AuthorizationHelper.IsAdminOrInstructor(HttpContext.Session))
         {
-            TempData["ErrorMessage"] = "Bạn không có quyền sửa sinh viên. Chỉ có Admin và Giảng viên mới có quyền này.";
+            TempData["ErrorMessage"] = "You do not have permission to edit students. Only Admin and Instructors have this permission.";
             return RedirectToAction(nameof(Index));
         }
 
@@ -127,7 +127,7 @@ public class StudentsController : Controller
     {
         if (!AuthorizationHelper.IsAdminOrInstructor(HttpContext.Session))
         {
-            TempData["ErrorMessage"] = "Bạn không có quyền xóa sinh viên. Chỉ có Admin và Giảng viên mới có quyền này.";
+            TempData["ErrorMessage"] = "You do not have permission to delete students. Only Admin and Instructors have this permission.";
             return RedirectToAction(nameof(Index));
         }
 
@@ -145,7 +145,7 @@ public class StudentsController : Controller
     {
         if (!AuthorizationHelper.IsAdminOrInstructor(HttpContext.Session))
         {
-            TempData["ErrorMessage"] = "Bạn không có quyền xóa sinh viên. Chỉ có Admin và Giảng viên mới có quyền này.";
+            TempData["ErrorMessage"] = "You do not have permission to delete students. Only Admin and Instructors have this permission.";
             return RedirectToAction(nameof(Index));
         }
 

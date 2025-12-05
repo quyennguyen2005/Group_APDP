@@ -1,7 +1,7 @@
 @model WebApp.Models.Student
 
 @{
-    ViewData["Title"] = "Cập nhật sinh viên";
+    ViewData["Title"] = "Edit Student";
 }
 
 <h1 class="display-6 mb-4">@ViewData["Title"]</h1>
@@ -44,8 +44,8 @@
         <span asp-validation-for="EnrollmentDate" class="text-danger"></span>
     </div>
     <div class="col-12 d-flex gap-2">
-        <button type="submit" class="btn btn-primary">Lưu</button>
-        <a asp-action="Index" class="btn btn-outline-secondary">Quay lại</a>
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Back</a>
     </div>
 </form>
 

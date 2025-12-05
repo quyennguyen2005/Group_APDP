@@ -81,4 +81,10 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Welcome}/{action=Index}/{id?}");
 
+// Add explicit route for Profile
+app.MapControllerRoute(
+    name: "profile",
+    pattern: "Profile",
+    defaults: new { controller = "Profile", action = "Index" });
+
 app.Run();

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -23,47 +23,55 @@
             </div>
             
             <nav class="sidebar-nav">
+                @{
+                    var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+                    var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+                }
                 <div class="nav-section">
-                    <div class="nav-section-title">CHÍNH</div>
-                    <a asp-controller="Home" asp-action="Index" class="nav-item active">
+                    <div class="nav-section-title">MAIN</div>
+                    <a asp-controller="Home" asp-action="Index" class="nav-item @(currentController == "Home" ? "active" : "")">
                         <span class="nav-icon">🕐</span>
                         <span>Dashboard</span>
                     </a>
-                    <a asp-controller="Courses" asp-action="Index" class="nav-item">
+                    <a asp-controller="Courses" asp-action="Index" class="nav-item @(currentController == "Courses" ? "active" : "")">
                         <span class="nav-icon">📚</span>
-                        <span>Khóa học</span>
+                        <span>Courses</span>
                     </a>
-                    <a asp-controller="Students" asp-action="Index" class="nav-item">
+                    <a asp-controller="Students" asp-action="Index" class="nav-item @(currentController == "Students" ? "active" : "")">
                         <span class="nav-icon">👥</span>
-                        <span>Sinh viên</span>
+                        <span>Students</span>
+                    </a>
+                    <a asp-controller="Profile" asp-action="Index" class="nav-item @(currentController == "Profile" ? "active" : "")">
+                        <span class="nav-icon">👤</span>
+                        <span>Profile</span>
                     </a>
                 </div>
                 
                 <div class="nav-section">
-                    <div class="nav-section-title">GIAO TIẾP</div>
+                    <div class="nav-section-title">COMMUNICATION</div>
                     <a href="#" class="nav-item">
                         <span class="nav-icon">✉️</span>
-                        <span>Tin nhắn</span>
+                        <span>Messages</span>
                     </a>
                     <a href="#" class="nav-item">
                         <span class="nav-icon">💬</span>
-                        <span>Diễn đàn</span>
+                        <span>Forum</span>
                     </a>
                 </div>
                 
                 <div class="nav-section">
-                    <div class="nav-section-title">ĐÁNH GIÁ</div>
+                    <div class="nav-section-title">ASSESSMENT</div>
                     <a href="#" class="nav-item">
                         <span class="nav-icon">✓</span>
-                        <span>Bài tập</span>
+                        <span>Assignments</span>
                     </a>
                     <a href="#" class="nav-item">
                         <span class="nav-icon">?</span>
-                        <span>Bài kiểm tra</span>
+                        <span>Tests</span>
                     </a>
                     <a href="#" class="nav-item">
                         <span class="nav-icon">📊</span>
-                        <span>Điểm số</span>
+                        <span>Grades</span>
                     </a>
                 </div>
             </nav>
@@ -86,7 +94,7 @@
                 </a>
                 <form asp-controller="Account" asp-action="Logout" method="post" class="logout-form">
                     <button type="submit" class="logout-link">
-                        <span>→</span> Đăng xuất
+                        <span>→</span> Logout
                     </button>
                 </form>
             </div>
@@ -99,7 +107,7 @@
                 <div class="dashboard-actions">
                     <div class="search-box">
                         <span>🔍</span>
-                        <input type="text" placeholder="Tìm kiếm..." />
+                        <input type="text" placeholder="Search..." />
                     </div>
                 </div>
             </div>

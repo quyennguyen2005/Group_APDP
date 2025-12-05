@@ -2,7 +2,7 @@
 @using WebApp.Helpers
 
 @{
-    ViewData["Title"] = "Khoá học";
+    ViewData["Title"] = "Courses";
     var canManage = AuthorizationHelper.IsAdminOrInstructor(Context.Session);
 }
 
@@ -17,11 +17,11 @@
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
         <h1 class="display-6">@ViewData["Title"]</h1>
-        <p class="text-muted mb-0">Quản lý danh sách khoá học và sĩ số.</p>
+        <p class="text-muted mb-0">Manage course list and enrollment.</p>
     </div>
     @if (canManage)
     {
-        <a asp-action="Create" class="btn btn-primary">Thêm khoá học</a>
+        <a asp-action="Create" class="btn btn-primary">Add Course</a>
     }
 </div>
 
@@ -29,12 +29,12 @@
     <table class="table table-hover mb-0 align-middle">
         <thead class="table-light">
         <tr>
-            <th>Mã</th>
-            <th>Tên khoá học</th>
-            <th>Giảng viên</th>
-            <th>Học kỳ</th>
-            <th>Số tín chỉ</th>
-            <th>Sĩ số</th>
+            <th>Code</th>
+            <th>Course Title</th>
+            <th>Instructor</th>
+            <th>Semester</th>
+            <th>Credits</th>
+            <th>Enrollment</th>
             <th></th>
         </tr>
         </thead>
@@ -52,11 +52,11 @@
                 <td>@item.Course.Credits</td>
                 <td>@item.EnrolledCount / @item.Course.MaxStudents</td>
                 <td class="text-end">
-                    <a asp-action="Details" asp-route-id="@item.Course.Id" class="btn btn-sm btn-outline-primary me-2">Chi tiết</a>
+                    <a asp-action="Details" asp-route-id="@item.Course.Id" class="btn btn-sm btn-outline-primary me-2">Details</a>
                     @if (canManage)
                     {
-                        <a asp-action="Edit" asp-route-id="@item.Course.Id" class="btn btn-sm btn-outline-secondary me-1">Sửa</a>
-                        <a asp-action="Delete" asp-route-id="@item.Course.Id" class="btn btn-sm btn-outline-danger">Xoá</a>
+                        <a asp-action="Edit" asp-route-id="@item.Course.Id" class="btn btn-sm btn-outline-secondary me-1">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@item.Course.Id" class="btn btn-sm btn-outline-danger">Delete</a>
                     }
                 </td>
             </tr>

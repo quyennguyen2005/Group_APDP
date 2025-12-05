@@ -7,7 +7,7 @@ public class Instructor
     public int Id { get; set; }
 
     [Required]
-    [Display(Name = "Họ tên")]
+    [Display(Name = "Full Name")]
     public string FullName { get; set; } = string.Empty;
 
     [EmailAddress]
@@ -16,7 +16,7 @@ public class Instructor
     [Phone]
     public string PhoneNumber { get; set; } = string.Empty;
 
-    [Display(Name = "Khoa")]
+    [Display(Name = "Department")]
     public int DepartmentId { get; set; }
 }
 

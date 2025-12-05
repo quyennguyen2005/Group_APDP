@@ -58,7 +58,7 @@ namespace WebApp.Controllers
             var courseSummaries = courses
                 .Select(c =>
                 {
-                    var departmentName = departments.FirstOrDefault(d => d.Id == c.DepartmentId)?.Name ?? "Khác";
+                    var departmentName = departments.FirstOrDefault(d => d.Id == c.DepartmentId)?.Name ?? "Other";
                     return new CourseOverview
                     {
                         CourseCode = c.CourseCode,
@@ -76,10 +76,10 @@ namespace WebApp.Controllers
                     var instructor = instructors.FirstOrDefault(i => i.Id == cls.InstructorId);
                     return new ClassOverview
                     {
-                        Name = course?.Title ?? $"Lớp #{cls.Id}",
+                        Name = course?.Title ?? $"Class #{cls.Id}",
                         Semester = cls.Semester,
                         AcademicYear = cls.AcademicYear,
-                        Instructor = instructor?.FullName ?? "Chưa phân công",
+                        Instructor = instructor?.FullName ?? "Not assigned",
                         Schedule = $"{cls.Room} • {cls.Schedule}"
                     };
                 })

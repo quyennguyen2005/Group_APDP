@@ -7,19 +7,19 @@ public class Student
     public int Id { get; set; }
 
     [Required]
-    [Display(Name = "Mã sinh viên")]
+    [Display(Name = "Student Code")]
     [StringLength(30)]
     public string StudentCode { get; set; } = string.Empty;
 
     [Required]
-    [Display(Name = "Họ tên")]
+    [Display(Name = "Full Name")]
     [StringLength(100)]
     public string FullName { get; set; } = string.Empty;
 
     [EmailAddress]
     public string Email { get; set; } = string.Empty;
 
-    [Display(Name = "Chuyên ngành")]
+    [Display(Name = "Major")]
     [StringLength(100)]
     public string Major { get; set; } = "General";
 
@@ -28,13 +28,13 @@ public class Student
     public double Gpa { get; set; }
 
     [Range(0, 200)]
-    [Display(Name = "Tổng tín chỉ")]
+    [Display(Name = "Total Credits")]
     public int TotalCredits { get; set; }
 
-    [Display(Name = "Ngày nhập học")]
+    [Display(Name = "Enrollment Date")]
     public DateTime EnrollmentDate { get; set; }
 
-    [Display(Name = "Khoa")]
+    [Display(Name = "Department")]
     public int? DepartmentId { get; set; }
 }
 

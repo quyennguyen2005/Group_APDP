@@ -1,6 +1,6 @@
 @{
     Layout = "_DashboardLayout";
-    ViewData["Title"] = "Chỉnh sửa hồ sơ";
+    ViewData["Title"] = "Edit Profile";
     
     var userAccount = ViewBag.UserAccount as WebApp.Models.UserAccount;
     var student = ViewBag.Student as WebApp.Models.Student;
@@ -10,8 +10,8 @@
 
 <div class="profile-edit-container">
     <div class="profile-edit-header">
-        <h1>Chỉnh sửa hồ sơ cá nhân</h1>
-        <a asp-action="Index" class="btn btn-outline-secondary">← Quay lại</a>
+        <h1>Edit Profile</h1>
+        <a asp-action="Index" class="btn btn-outline-secondary">← Back</a>
     </div>
 
     @if (TempData["ErrorMessage"] != null)
@@ -27,21 +27,21 @@
 
         <!-- User Account Section -->
         <div class="form-section">
-            <h3>Thông tin tài khoản</h3>
+            <h3>Account Information</h3>
             <div class="form-grid">
                 <div class="form-group">
-                    <label>Tên đăng nhập</label>
+                    <label>Username</label>
                     <input type="text" class="form-control" value="@userAccount?.Username" disabled>
-                    <small class="form-text text-muted">Tên đăng nhập không thể thay đổi</small>
+                    <small class="form-text text-muted">Username cannot be changed</small>
                 </div>
                 <div class="form-group">
                     <label>Email <span class="text-danger">*</span></label>
                     <input type="email" name="email" class="form-control" value="@userAccount?.Email" required>
                 </div>
                 <div class="form-group">
-                    <label>Vai trò</label>
+                    <label>Role</label>
                     <input type="text" class="form-control" value="@userAccount?.Role" disabled>
-                    <small class="form-text text-muted">Vai trò không thể thay đổi</small>
+                    <small class="form-text text-muted">Role cannot be changed</small>
                 </div>
             </div>
         </div>
@@ -50,15 +50,15 @@
         {
             <!-- Student Section -->
             <div class="form-section">
-                <h3>Thông tin sinh viên</h3>
+                <h3>Student Information</h3>
                 <div class="form-grid">
                     <div class="form-group">
-                        <label>Mã sinh viên</label>
+                        <label>Student Code</label>
                         <input type="text" class="form-control" value="@student.StudentCode" disabled>
-                        <small class="form-text text-muted">Mã sinh viên không thể thay đổi</small>
+                        <small class="form-text text-muted">Student code cannot be changed</small>
                     </div>
                     <div class="form-group">
-                        <label>Họ tên <span class="text-danger">*</span></label>
+                        <label>Full Name <span class="text-danger">*</span></label>
                         <input type="text" name="studentFullName" class="form-control" value="@student.FullName" required>
                     </div>
                     <div class="form-group">
@@ -66,13 +66,13 @@
                         <input type="email" name="studentEmail" class="form-control" value="@student.Email" required>
                     </div>
                     <div class="form-group">
-                        <label>Chuyên ngành <span class="text-danger">*</span></label>
+                        <label>Major <span class="text-danger">*</span></label>
                         <input type="text" name="studentMajor" class="form-control" value="@student.Major" required>
                     </div>
                     <div class="form-group">
-                        <label>Khoa</label>
+                        <label>Department</label>
                         <select name="studentDepartmentId" class="form-select">
-                            <option value="">-- Chọn khoa --</option>
+                            <option value="">-- Select Department --</option>
                             @foreach (var dept in departments)
                             {
                                 @if (student.DepartmentId == dept.Id)
@@ -89,12 +89,12 @@
                     <div class="form-group">
                         <label>GPA</label>
                         <input type="text" class="form-control" value="@student.Gpa.ToString("0.00")" disabled>
-                        <small class="form-text text-muted">GPA không thể thay đổi</small>
+                        <small class="form-text text-muted">GPA cannot be changed</small>
                     </div>
                     <div class="form-group">
-                        <label>Tổng tín chỉ</label>
+                        <label>Total Credits</label>
                         <input type="text" class="form-control" value="@student.TotalCredits" disabled>
-                        <small class="form-text text-muted">Tổng tín chỉ không thể thay đổi</small>
+                        <small class="form-text text-muted">Total credits cannot be changed</small>
                     </div>
                 </div>
             </div>
@@ -104,10 +104,10 @@
         {
             <!-- Instructor Section -->
             <div class="form-section">
-                <h3>Thông tin giảng viên</h3>
+                <h3>Instructor Information</h3>
                 <div class="form-grid">
                     <div class="form-group">
-                        <label>Họ tên <span class="text-danger">*</span></label>
+                        <label>Full Name <span class="text-danger">*</span></label>
                         <input type="text" name="instructorFullName" class="form-control" value="@instructor.FullName" required>
                     </div>
                     <div class="form-group">
@@ -115,13 +115,13 @@
                         <input type="email" name="instructorEmail" class="form-control" value="@instructor.Email" required>
                     </div>
                     <div class="form-group">
-                        <label>Số điện thoại</label>
+                        <label>Phone Number</label>
                         <input type="tel" name="instructorPhoneNumber" class="form-control" value="@instructor.PhoneNumber">
                     </div>
                     <div class="form-group">
-                        <label>Khoa <span class="text-danger">*</span></label>
+                        <label>Department <span class="text-danger">*</span></label>
                         <select name="instructorDepartmentId" class="form-select" required>
-                            <option value="">-- Chọn khoa --</option>
+                            <option value="">-- Select Department --</option>
                             @foreach (var dept in departments)
                             {
                                 @if (instructor.DepartmentId == dept.Id)
@@ -141,9 +141,9 @@
 
         <div class="form-actions">
             <button type="submit" class="btn btn-primary btn-lg">
-                <span>💾</span> Lưu thay đổi
+                <span>💾</span> Save Changes
             </button>
-            <a asp-action="Index" class="btn btn-outline-secondary btn-lg">Hủy</a>
+            <a asp-action="Index" class="btn btn-outline-secondary btn-lg">Cancel</a>
         </div>
     </form>
 </div>

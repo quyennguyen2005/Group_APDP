@@ -2,16 +2,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApp.Data;
 using WebApp.Models;
+using WebApp.Services.Auth;
 
 namespace WebApp.Controllers;
 
 public class ProfileController : Controller
 {
     private readonly ApplicationDbContext _dbContext;
+    private readonly AuthService _authService;
 
-    public ProfileController(ApplicationDbContext dbContext)
+    public ProfileController(ApplicationDbContext dbContext, AuthService authService)
     {
         _dbContext = dbContext;
+        _authService = authService;
     }
 
     public async Task<IActionResult> Index()
@@ -25,9 +28,27 @@ public class ProfileController : Controller
         var userAccount = await _dbContext.UserAccounts
             .FirstOrDefaultAsync(u => u.Username == username);
 
+        // Fallback to AuthService if not found in database
         if (userAccount == null)
         {
-            return NotFound();
+            var authUser = await _authService.GetUserByUsernameAsync(username);
+            if (authUser == null)
+            {
+                return NotFound();
+            }
+            
+            // Create UserAccount in database if it doesn't exist
+            userAccount = new UserAccount
+            {
+                Username = authUser.Username,
+                Password = authUser.Password,
+                Email = authUser.Email,
+                Role = authUser.Role,
+                StudentId = authUser.StudentId,
+                InstructorId = authUser.InstructorId
+            };
+            _dbContext.UserAccounts.Add(userAccount);
+            await _dbContext.SaveChangesAsync();
         }
 
         // Get related student or instructor info if available
@@ -77,9 +98,27 @@ public class ProfileController : Controller
         var userAccount = await _dbContext.UserAccounts
             .FirstOrDefaultAsync(u => u.Username == username);
 
+        // Fallback to AuthService if not found in database
         if (userAccount == null)
         {
-            return NotFound();
+            var authUser = await _authService.GetUserByUsernameAsync(username);
+            if (authUser == null)
+            {
+                return NotFound();
+            }
+            
+            // Create UserAccount in database if it doesn't exist
+            userAccount = new UserAccount
+            {
+                Username = authUser.Username,
+                Password = authUser.Password,
+                Email = authUser.Email,
+                Role = authUser.Role,
+                StudentId = authUser.StudentId,
+                InstructorId = authUser.InstructorId
+            };
+            _dbContext.UserAccounts.Add(userAccount);
+            await _dbContext.SaveChangesAsync();
         }
 
         // Get related student or instructor info if available
@@ -121,9 +160,27 @@ public class ProfileController : Controller
         var userAccount = await _dbContext.UserAccounts
             .FirstOrDefaultAsync(u => u.Username == username);
 
+        // Fallback to AuthService if not found in database
         if (userAccount == null)
         {
-            return NotFound();
+            var authUser = await _authService.GetUserByUsernameAsync(username);
+            if (authUser == null)
+            {
+                return NotFound();
+            }
+            
+            // Create UserAccount in database if it doesn't exist
+            userAccount = new UserAccount
+            {
+                Username = authUser.Username,
+                Password = authUser.Password,
+                Email = authUser.Email,
+                Role = authUser.Role,
+                StudentId = authUser.StudentId,
+                InstructorId = authUser.InstructorId
+            };
+            _dbContext.UserAccounts.Add(userAccount);
+            await _dbContext.SaveChangesAsync();
         }
 
         try
@@ -174,12 +231,12 @@ public class ProfileController : Controller
             }
 
             await _dbContext.SaveChangesAsync();
-            TempData["SuccessMessage"] = "Cập nhật thông tin thành công!";
+            TempData["SuccessMessage"] = "Profile updated successfully!";
             return RedirectToAction(nameof(Index));
         }
         catch (Exception ex)
         {
-            TempData["ErrorMessage"] = $"Lỗi khi cập nhật: {ex.Message}";
+            TempData["ErrorMessage"] = $"Error updating profile: {ex.Message}";
             return RedirectToAction(nameof(Edit));
         }
     }

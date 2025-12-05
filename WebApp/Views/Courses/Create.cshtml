@@ -1,7 +1,7 @@
 @model WebApp.Models.Course
 
 @{
-    ViewData["Title"] = "Thêm khoá học";
+    ViewData["Title"] = "Add Course";
 }
 
 <h1 class="display-6 mb-4">@ViewData["Title"]</h1>
@@ -53,8 +53,8 @@
         <span asp-validation-for="EndDate" class="text-danger"></span>
     </div>
     <div class="col-12 d-flex gap-2">
-        <button type="submit" class="btn btn-primary">Lưu</button>
-        <a asp-action="Index" class="btn btn-outline-secondary">Huỷ</a>
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
     </div>
 </form>
 

@@ -49,7 +49,7 @@ public class AccountController : Controller
                 HttpContext.Session.SetString("Role", userAccount.Role);
             }
             
-            TempData["WelcomeBack"] = $"Xin chào {input.Username}!";
+            TempData["WelcomeBack"] = $"Welcome back, {input.Username}!";
             return RedirectToAction("Index", "Home");
         }
 
@@ -83,7 +83,7 @@ public class AccountController : Controller
 
         if (result.Success)
         {
-            TempData["LoginMessage"] = result.Message + " Vui lòng đăng nhập.";
+            TempData["LoginMessage"] = result.Message + " Please login.";
             return RedirectToAction(nameof(Login));
         }
 
@@ -96,7 +96,7 @@ public class AccountController : Controller
     public IActionResult Logout()
     {
         HttpContext.Session.Clear();
-        TempData["LoginMessage"] = "Đã đăng xuất thành công.";
+        TempData["LoginMessage"] = "Logged out successfully.";
         return RedirectToAction(nameof(Login));
     }
 }

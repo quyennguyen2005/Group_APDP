@@ -39,7 +39,7 @@ public class AuthService
     {
         if (_users.ContainsKey(account.Username))
         {
-            return Task.FromResult((false, "Tài khoản đã tồn tại."));
+            return Task.FromResult((false, "Account already exists."));
         }
 
         _users[account.Username] = new UserAccount
@@ -49,7 +49,7 @@ public class AuthService
             Email = account.Email,
             Role = string.IsNullOrWhiteSpace(account.Role) ? "Student" : account.Role
         };
-        return Task.FromResult((true, "Đăng ký thành công!"));
+        return Task.FromResult((true, "Registration successful!"));
     }
 
     public Task<(bool Success, string Message)> LoginAsync(UserAccount account)
@@ -57,10 +57,10 @@ public class AuthService
         if (_users.TryGetValue(account.Username, out var existing)
             && existing.Password == HashPassword(account.Password))
         {
-            return Task.FromResult((true, "Đăng nhập thành công!"));
+            return Task.FromResult((true, "Login successful!"));
         }
 
-        return Task.FromResult((false, "Sai tên đăng nhập hoặc mật khẩu."));
+        return Task.FromResult((false, "Invalid username or password."));
     }
 
     public Task<UserAccount?> GetUserByUsernameAsync(string username)

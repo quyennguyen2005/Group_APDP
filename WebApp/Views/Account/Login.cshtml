@@ -1,7 +1,7 @@
 @model WebApp.ViewModels.LoginInput
 
 @{
-    ViewData["Title"] = "Đăng nhập";
+    ViewData["Title"] = "Login";
     var visitorName = ViewBag.VisitorName as string;
     var message = ViewBag.LoginMessage as string;
 }
@@ -13,13 +13,13 @@
                 <span class="brand-accent">BTEC</span>
                 <span class="brand-sub">FPT Education</span>
             </div>
-            <h1>Đăng nhập</h1>
-            <p class="text-muted">Vui lòng đăng nhập để tiếp tục</p>
+            <h1>Login</h1>
+            <p class="text-muted">Please login to continue</p>
         </div>
 
         @if (!string.IsNullOrEmpty(visitorName))
         {
-            <div class="alert alert-success">Xin chào @visitorName! Vui lòng đăng nhập để tiếp tục.</div>
+            <div class="alert alert-success">Hello @visitorName! Please login to continue.</div>
         }
         @if (!string.IsNullOrEmpty(message))
         {
@@ -44,14 +44,14 @@
                 </div>
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-primary btn-lg">Đăng nhập</button>
+            <button type="submit" class="btn btn-primary btn-lg">Login</button>
         </form>
 
         <div class="mt-4 text-center link-muted">
-            Chưa có tài khoản? <a asp-action="Register">Đăng ký ngay</a>
+            Don't have an account? <a asp-action="Register">Register now</a>
         </div>
         <div class="text-center mt-2">
-            <a asp-controller="Welcome" asp-action="Index" class="link-muted">&larr; Quay lại trang chào mừng</a>
+            <a asp-controller="Welcome" asp-action="Index" class="link-muted">&larr; Back to welcome page</a>
         </div>
     </div>
 </div>

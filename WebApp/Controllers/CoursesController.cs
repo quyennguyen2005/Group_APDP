@@ -67,7 +67,7 @@ public class CoursesController : Controller
     {
         if (!AuthorizationHelper.IsAdminOrInstructor(HttpContext.Session))
         {
-            TempData["ErrorMessage"] = "Bạn không có quyền thêm khóa học. Chỉ có Admin và Giảng viên mới có quyền này.";
+            TempData["ErrorMessage"] = "You do not have permission to add courses. Only Admin and Instructors have this permission.";
             return RedirectToAction(nameof(Index));
         }
         return View(new Course
@@ -83,7 +83,7 @@ public class CoursesController : Controller
     {
         if (!AuthorizationHelper.IsAdminOrInstructor(HttpContext.Session))
         {
-            TempData["ErrorMessage"] = "Bạn không có quyền thêm khóa học. Chỉ có Admin và Giảng viên mới có quyền này.";
+            TempData["ErrorMessage"] = "You do not have permission to add courses. Only Admin and Instructors have this permission.";
             return RedirectToAction(nameof(Index));
         }
 
@@ -101,7 +101,7 @@ public class CoursesController : Controller
     {
         if (!AuthorizationHelper.IsAdminOrInstructor(HttpContext.Session))
         {
-            TempData["ErrorMessage"] = "Bạn không có quyền sửa khóa học. Chỉ có Admin và Giảng viên mới có quyền này.";
+            TempData["ErrorMessage"] = "You do not have permission to edit courses. Only Admin and Instructors have this permission.";
             return RedirectToAction(nameof(Index));
         }
 
@@ -119,7 +119,7 @@ public class CoursesController : Controller
     {
         if (!AuthorizationHelper.IsAdminOrInstructor(HttpContext.Session))
         {
-            TempData["ErrorMessage"] = "Bạn không có quyền sửa khóa học. Chỉ có Admin và Giảng viên mới có quyền này.";
+            TempData["ErrorMessage"] = "You do not have permission to edit courses. Only Admin and Instructors have this permission.";
             return RedirectToAction(nameof(Index));
         }
 
@@ -142,7 +142,7 @@ public class CoursesController : Controller
     {
         if (!AuthorizationHelper.IsAdminOrInstructor(HttpContext.Session))
         {
-            TempData["ErrorMessage"] = "Bạn không có quyền xóa khóa học. Chỉ có Admin và Giảng viên mới có quyền này.";
+            TempData["ErrorMessage"] = "You do not have permission to delete courses. Only Admin and Instructors have this permission.";
             return RedirectToAction(nameof(Index));
         }
 
@@ -160,7 +160,7 @@ public class CoursesController : Controller
     {
         if (!AuthorizationHelper.IsAdminOrInstructor(HttpContext.Session))
         {
-            TempData["ErrorMessage"] = "Bạn không có quyền xóa khóa học. Chỉ có Admin và Giảng viên mới có quyền này.";
+            TempData["ErrorMessage"] = "You do not have permission to delete courses. Only Admin and Instructors have this permission.";
             return RedirectToAction(nameof(Index));
         }
 
@@ -181,7 +181,7 @@ public class CoursesController : Controller
 
         if (selectedStudentId == 0)
         {
-            TempData["CourseMessage"] = "Vui lòng chọn một sinh viên.";
+            TempData["CourseMessage"] = "Please select a student.";
             return RedirectToAction(nameof(Details), new { id = courseId });
         }
 
@@ -191,7 +191,7 @@ public class CoursesController : Controller
             StudentId = selectedStudentId
         });
         await _unitOfWork.SaveChangesAsync();
-        TempData["CourseMessage"] = "Đã phân công sinh viên vào khoá học.";
+        TempData["CourseMessage"] = "Student has been assigned to the course.";
         return RedirectToAction(nameof(Details), new { id = courseId });
     }
 
@@ -206,7 +206,7 @@ public class CoursesController : Controller
             await _unitOfWork.Enrollments.RemoveAsync(target.Id);
             await _unitOfWork.SaveChangesAsync();
         }
-        TempData["CourseMessage"] = "Đã xoá sinh viên khỏi khoá học.";
+        TempData["CourseMessage"] = "Student has been removed from the course.";
         return RedirectToAction(nameof(Details), new { id = courseId });
     }
 }

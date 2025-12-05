@@ -1,13 +1,13 @@
 @{
     Layout = "_DashboardLayout";
-    ViewData["Title"] = "Hồ sơ cá nhân";
+    ViewData["Title"] = "Profile";
     
     var userAccount = ViewBag.UserAccount as WebApp.Models.UserAccount;
     var student = ViewBag.Student as WebApp.Models.Student;
     var instructor = ViewBag.Instructor as WebApp.Models.Instructor;
     var department = ViewBag.Department as WebApp.Models.Department;
     
-    var displayName = instructor?.FullName ?? student?.FullName ?? userAccount?.Username ?? "Người dùng";
+    var displayName = instructor?.FullName ?? student?.FullName ?? userAccount?.Username ?? "User";
     var role = userAccount?.Role ?? "User";
     var initials = string.Join("", displayName.Split(' ').Select(n => n[0]).Take(2)).ToUpper();
 }
@@ -27,7 +27,7 @@
         </div>
         <div class="profile-actions">
             <a asp-action="Edit" class="btn btn-primary">
-                <span>✏️</span> Chỉnh sửa
+                <span>✏️</span> Edit
             </a>
         </div>
     </div>
@@ -50,10 +50,10 @@
 
     <div class="profile-content">
         <div class="profile-section">
-            <h3>Thông tin tài khoản</h3>
+            <h3>Account Information</h3>
             <div class="info-grid">
                 <div class="info-item">
-                    <label>Tên đăng nhập:</label>
+                    <label>Username:</label>
                     <span>@userAccount?.Username</span>
                 </div>
                 <div class="info-item">
@@ -61,7 +61,7 @@
                     <span>@userAccount?.Email</span>
                 </div>
                 <div class="info-item">
-                    <label>Vai trò:</label>
+                    <label>Role:</label>
                     <span>@role</span>
                 </div>
             </div>
@@ -70,14 +70,14 @@
         @if (student != null)
         {
             <div class="profile-section">
-                <h3>Thông tin sinh viên</h3>
+                <h3>Student Information</h3>
                 <div class="info-grid">
                     <div class="info-item">
-                        <label>Mã sinh viên:</label>
+                        <label>Student Code:</label>
                         <span>@student.StudentCode</span>
                     </div>
                     <div class="info-item">
-                        <label>Họ tên:</label>
+                        <label>Full Name:</label>
                         <span>@student.FullName</span>
                     </div>
                     <div class="info-item">
@@ -85,7 +85,7 @@
                         <span>@student.Email</span>
                     </div>
                     <div class="info-item">
-                        <label>Chuyên ngành:</label>
+                        <label>Major:</label>
                         <span>@student.Major</span>
                     </div>
                     <div class="info-item">
@@ -93,11 +93,11 @@
                         <span>@student.Gpa.ToString("0.00")</span>
                     </div>
                     <div class="info-item">
-                        <label>Tổng tín chỉ:</label>
+                        <label>Total Credits:</label>
                         <span>@student.TotalCredits</span>
                     </div>
                     <div class="info-item">
-                        <label>Ngày nhập học:</label>
+                        <label>Enrollment Date:</label>
                         <span>@student.EnrollmentDate.ToString("dd/MM/yyyy")</span>
                     </div>
                 </div>
@@ -107,10 +107,10 @@
         @if (instructor != null)
         {
             <div class="profile-section">
-                <h3>Thông tin giảng viên</h3>
+                <h3>Instructor Information</h3>
                 <div class="info-grid">
                     <div class="info-item">
-                        <label>Họ tên:</label>
+                        <label>Full Name:</label>
                         <span>@instructor.FullName</span>
                     </div>
                     <div class="info-item">
@@ -118,13 +118,13 @@
                         <span>@instructor.Email</span>
                     </div>
                     <div class="info-item">
-                        <label>Số điện thoại:</label>
+                        <label>Phone Number:</label>
                         <span>@instructor.PhoneNumber</span>
                     </div>
                     @if (department != null)
                     {
                         <div class="info-item">
-                            <label>Khoa:</label>
+                            <label>Department:</label>
                             <span>@department.Name</span>
                         </div>
                     }

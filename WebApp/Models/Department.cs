@@ -7,13 +7,13 @@ public class Department
     public int Id { get; set; }
 
     [Required]
-    [Display(Name = "Tên khoa")]
+    [Display(Name = "Department Name")]
     public string Name { get; set; } = string.Empty;
 
-    [Display(Name = "Khối/Ngành")]
+    [Display(Name = "Faculty")]
     public string Faculty { get; set; } = string.Empty;
 
-    [Display(Name = "Văn phòng")]
+    [Display(Name = "Office Location")]
     public string OfficeLocation { get; set; } = string.Empty;
 }
 

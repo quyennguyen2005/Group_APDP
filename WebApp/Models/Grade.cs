@@ -18,7 +18,7 @@ public class Grade
     [Range(0, 100)]
     public double FinalScore { get; set; }
 
-    [Display(Name = "Xếp loại cuối")]
+    [Display(Name = "Final Grade")]
     public string FinalGrade { get; set; } = "P";
 }
 

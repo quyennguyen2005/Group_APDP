@@ -74,12 +74,12 @@ public class AccountSummary
 public class LoginInput
 {
     [Required]
-    [Display(Name = "Tên đăng nhập")]
+    [Display(Name = "Username")]
     public string Username { get; set; } = string.Empty;
 
     [Required]
     [DataType(DataType.Password)]
-    [Display(Name = "Mật khẩu")]
+    [Display(Name = "Password")]
     public string Password { get; set; } = string.Empty;
 }
 
@@ -91,14 +91,14 @@ public class RegisterInput : LoginInput
     public string Email { get; set; } = string.Empty;
 
     [Required]
-    [Display(Name = "Vai trò")]
+    [Display(Name = "Role")]
     public string Role { get; set; } = "Student";
 }
 
 public class WelcomeInput
 {
     [Required]
-    [Display(Name = "Tên của bạn")]
+    [Display(Name = "Your Name")]
     public string FullName { get; set; } = string.Empty;
 }
 

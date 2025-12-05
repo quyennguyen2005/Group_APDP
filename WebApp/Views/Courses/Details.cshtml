@@ -1,19 +1,19 @@
 @model WebApp.ViewModels.CourseDetailsViewModel
 
 @{
-    ViewData["Title"] = "Chi tiết khoá học";
+    ViewData["Title"] = "Course Details";
     var flash = TempData["CourseMessage"] as string;
 }
 
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
-        <p class="text-uppercase text-muted mb-1">Khoá học</p>
+        <p class="text-uppercase text-muted mb-1">Course</p>
         <h1 class="display-6 mb-0">@Model.Course.Title</h1>
         <div class="text-muted">@Model.Course.CourseCode • @Model.Course.Semester</div>
     </div>
     <div class="d-flex gap-2">
-        <a asp-action="Edit" asp-route-id="@Model.Course.Id" class="btn btn-outline-secondary">Sửa</a>
-        <a asp-action="Index" class="btn btn-outline-secondary">Quay lại</a>
+        <a asp-action="Edit" asp-route-id="@Model.Course.Id" class="btn btn-outline-secondary">Edit</a>
+        <a asp-action="Index" class="btn btn-outline-secondary">Back</a>
     </div>
 </div>
 
@@ -26,22 +26,22 @@
     <div class="col-md-4">
         <div class="feature-card text-start">
             <div class="feature-icon">👨‍🏫</div>
-            <div class="feature-title">Giảng viên</div>
+            <div class="feature-title">Instructor</div>
             <div>@Model.Course.Instructor</div>
         </div>
     </div>
     <div class="col-md-4">
         <div class="feature-card text-start">
             <div class="feature-icon">🗓️</div>
-            <div class="feature-title">Thời gian</div>
+            <div class="feature-title">Duration</div>
             <div>@Model.Course.StartDate:dd/MM/yyyy - @Model.Course.EndDate:dd/MM/yyyy</div>
         </div>
     </div>
     <div class="col-md-4">
         <div class="feature-card text-start">
             <div class="feature-icon">👥</div>
-            <div class="feature-title">Sĩ số</div>
-            <div>@Model.EnrolledStudents.Count / @Model.Course.MaxStudents sinh viên</div>
+            <div class="feature-title">Enrollment</div>
+            <div>@Model.EnrolledStudents.Count / @Model.Course.MaxStudents students</div>
         </div>
     </div>
 </div>
@@ -50,12 +50,12 @@
     <div class="col-lg-7">
         <div class="card shadow-sm">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <span class="fw-semibold">Sinh viên đang theo học</span>
+                <span class="fw-semibold">Enrolled Students</span>
             </div>
             <div class="card-body">
                 @if (!Model.EnrolledStudents.Any())
                 {
-                    <div class="text-muted">Chưa có sinh viên nào được phân công.</div>
+                    <div class="text-muted">No students assigned yet.</div>
                 }
                 else
                 {
@@ -70,7 +70,7 @@
                                 <form asp-action="RemoveStudent" method="post" class="ms-3">
                                     <input type="hidden" name="courseId" value="@Model.Course.Id" />
                                     <input type="hidden" name="studentId" value="@student.Id" />
-                                    <button type="submit" class="btn btn-sm btn-outline-danger">Xoá</button>
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Remove</button>
                                 </form>
                             </div>
                         }
@@ -82,25 +82,25 @@
     <div class="col-lg-5">
         <div class="card shadow-sm">
             <div class="card-header">
-                <span class="fw-semibold">Phân công sinh viên</span>
+                <span class="fw-semibold">Assign Student</span>
             </div>
             <div class="card-body">
                 @if (!Model.AvailableStudents.Any())
                 {
-                    <div class="text-muted">Mọi sinh viên đã được phân công.</div>
+                    <div class="text-muted">All students have been assigned.</div>
                 }
                 else
                 {
                     <form asp-action="AssignStudent" method="post" class="d-flex flex-column gap-3">
                         <input type="hidden" name="courseId" value="@Model.Course.Id" />
                         <select class="form-select" name="selectedStudentId">
-                            <option value="">-- Chọn sinh viên --</option>
+                            <option value="">-- Select Student --</option>
                             @foreach (var student in Model.AvailableStudents)
                             {
                                 <option value="@student.Id">@student.FullName (@student.StudentCode)</option>
                             }
                         </select>
-                        <button type="submit" class="btn btn-primary">Thêm vào khoá học</button>
+                        <button type="submit" class="btn btn-primary">Add to Course</button>
                     </form>
                 }
             </div>
