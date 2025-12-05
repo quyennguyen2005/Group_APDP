@@ -1,0 +1,51 @@
+@model IEnumerable<WebApp.ViewModels.CourseListItemViewModel>
+
+@{
+    ViewData["Title"] = "Khoá học";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="display-6">@ViewData["Title"]</h1>
+        <p class="text-muted mb-0">Quản lý danh sách khoá học và sĩ số.</p>
+    </div>
+    <a asp-action="Create" class="btn btn-primary">Thêm khoá học</a>
+</div>
+
+<div class="table-responsive shadow-sm bg-white rounded">
+    <table class="table table-hover mb-0 align-middle">
+        <thead class="table-light">
+        <tr>
+            <th>Mã</th>
+            <th>Tên khoá học</th>
+            <th>Giảng viên</th>
+            <th>Học kỳ</th>
+            <th>Số tín chỉ</th>
+            <th>Sĩ số</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Course.CourseCode</td>
+                <td>
+                    <div class="fw-semibold">@item.Course.Title</div>
+                    <div class="text-muted small">@item.Course.Description</div>
+                </td>
+                <td>@item.Course.Instructor</td>
+                <td>@item.Course.Semester</td>
+                <td>@item.Course.Credits</td>
+                <td>@item.EnrolledCount / @item.Course.MaxStudents</td>
+                <td class="text-end">
+                    <a asp-action="Details" asp-route-id="@item.Course.Id" class="btn btn-sm btn-outline-primary me-2">Chi tiết</a>
+                    <a asp-action="Edit" asp-route-id="@item.Course.Id" class="btn btn-sm btn-outline-secondary me-1">Sửa</a>
+                    <a asp-action="Delete" asp-route-id="@item.Course.Id" class="btn btn-sm btn-outline-danger">Xoá</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+

@@ -1,0 +1,49 @@
+@model WebApp.Controllers.StudentDetailsViewModel
+
+@{
+    ViewData["Title"] = "Chi tiết sinh viên";
+}
+
+<h1 class="display-6 mb-4">@ViewData["Title"]</h1>
+
+<div class="row g-4">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">@Model.Student.FullName</h5>
+                <p class="card-subtitle text-muted">@Model.Student.StudentCode</p>
+                <dl class="row mt-3">
+                    <dt class="col-sm-4">Email</dt>
+                    <dd class="col-sm-8">@Model.Student.Email</dd>
+                    <dt class="col-sm-4">Chuyên ngành</dt>
+                    <dd class="col-sm-8">@Model.Student.Major</dd>
+                    <dt class="col-sm-4">Ngày nhập học</dt>
+                    <dd class="col-sm-8">@Model.Student.EnrollmentDate.ToString("dd/MM/yyyy")</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h5 class="card-title">Phân hạng</h5>
+                <div class="mb-3">
+                    <span class="text-muted d-block">GPA</span>
+                    <span class="fs-3 fw-bold">@Model.Student.Gpa.ToString("0.00")</span>
+                    <div class="badge bg-primary">@Model.GpaRank</div>
+                </div>
+                <div>
+                    <span class="text-muted d-block">Tổng tín chỉ</span>
+                    <span class="fs-3 fw-bold">@Model.Student.TotalCredits</span>
+                    <div class="badge bg-success">@Model.CreditRank</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-4">
+    <a asp-action="Edit" asp-route-id="@Model.Student.Id" class="btn btn-primary">Sửa</a>
+    <a asp-action="Index" class="btn btn-outline-secondary">Quay lại</a>
+</div>
+

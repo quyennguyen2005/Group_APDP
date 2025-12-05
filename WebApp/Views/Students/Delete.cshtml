@@ -1,0 +1,18 @@
+@model WebApp.Models.Student
+
+@{
+    ViewData["Title"] = "Xoá sinh viên";
+}
+
+<h1 class="display-6 text-danger mb-4">@ViewData["Title"]</h1>
+
+<div class="alert alert-warning">
+    Bạn chắc chắn muốn xoá sinh viên <strong>@Model.FullName (@Model.StudentCode)</strong>?
+</div>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Xoá</button>
+    <a asp-action="Index" class="btn btn-outline-secondary ms-2">Huỷ</a>
+</form>
+
