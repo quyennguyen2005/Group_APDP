@@ -58,9 +58,34 @@ public class StudentsController : Controller
             return View(student);
         }
 
+        // Check for duplicate StudentCode
+        var existingByCode = (await _unitOfWork.Students.GetAllAsync())
+            .FirstOrDefault(s => s.StudentCode.Equals(student.StudentCode, StringComparison.OrdinalIgnoreCase));
+        
+        if (existingByCode != null)
+        {
+            ModelState.AddModelError(nameof(Student.StudentCode), "A student with this student code already exists.");
+            return View(student);
+        }
+
+        // Check for duplicate Email (if provided)
+        if (!string.IsNullOrWhiteSpace(student.Email))
+        {
+            var existingByEmail = (await _unitOfWork.Students.GetAllAsync())
+                .FirstOrDefault(s => !string.IsNullOrWhiteSpace(s.Email) && 
+                                     s.Email.Equals(student.Email, StringComparison.OrdinalIgnoreCase));
+            
+            if (existingByEmail != null)
+            {
+                ModelState.AddModelError(nameof(Student.Email), "A student with this email already exists.");
+                return View(student);
+            }
+        }
+
         student.EnrollmentDate = DateTime.UtcNow;
         await _unitOfWork.Students.AddAsync(student);
         await _unitOfWork.SaveChangesAsync();
+        TempData["SuccessMessage"] = "Student created successfully.";
         return RedirectToAction(nameof(Index));
     }
 
@@ -100,8 +125,35 @@ public class StudentsController : Controller
             return View(student);
         }
 
+        // Check for duplicate StudentCode (excluding current student)
+        var existingByCode = (await _unitOfWork.Students.GetAllAsync())
+            .FirstOrDefault(s => s.Id != student.Id && 
+                                s.StudentCode.Equals(student.StudentCode, StringComparison.OrdinalIgnoreCase));
+        
+        if (existingByCode != null)
+        {
+            ModelState.AddModelError(nameof(Student.StudentCode), "A student with this student code already exists.");
+            return View(student);
+        }
+
+        // Check for duplicate Email (excluding current student)
+        if (!string.IsNullOrWhiteSpace(student.Email))
+        {
+            var existingByEmail = (await _unitOfWork.Students.GetAllAsync())
+                .FirstOrDefault(s => s.Id != student.Id && 
+                                    !string.IsNullOrWhiteSpace(s.Email) && 
+                                    s.Email.Equals(student.Email, StringComparison.OrdinalIgnoreCase));
+            
+            if (existingByEmail != null)
+            {
+                ModelState.AddModelError(nameof(Student.Email), "A student with this email already exists.");
+                return View(student);
+            }
+        }
+
         await _unitOfWork.Students.UpdateAsync(student);
         await _unitOfWork.SaveChangesAsync();
+        TempData["SuccessMessage"] = "Student updated successfully.";
         return RedirectToAction(nameof(Index));
     }
 

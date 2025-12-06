@@ -1,8 +1,14 @@
 @model WebApp.ViewModels.CourseDetailsViewModel
+@using WebApp.Helpers
 
 @{
     ViewData["Title"] = "Course Details";
     var flash = TempData["CourseMessage"] as string;
+    var currentStudentId = ViewBag.CurrentStudentId as int?;
+    var isEnrolled = (ViewBag.IsEnrolled as bool?) ?? false;
+    var canManage = (ViewBag.CanManage as bool?) ?? false;
+    var role = Context.Session.GetString("Role");
+    var isStudent = role == "Student";
 }
 
 <div class="d-flex justify-content-between align-items-center mb-4">
@@ -12,7 +18,10 @@
         <div class="text-muted">@Model.Course.CourseCode • @Model.Course.Semester</div>
     </div>
     <div class="d-flex gap-2">
-        <a asp-action="Edit" asp-route-id="@Model.Course.Id" class="btn btn-outline-secondary">Edit</a>
+        @if (canManage)
+        {
+            <a asp-action="Edit" asp-route-id="@Model.Course.Id" class="btn btn-outline-secondary">Edit</a>
+        }
         <a asp-action="Index" class="btn btn-outline-secondary">Back</a>
     </div>
 </div>
@@ -67,11 +76,19 @@
                                     <div class="fw-semibold">@student.FullName</div>
                                     <div class="text-muted small">@student.StudentCode • @student.Major</div>
                                 </div>
-                                <form asp-action="RemoveStudent" method="post" class="ms-3">
-                                    <input type="hidden" name="courseId" value="@Model.Course.Id" />
-                                    <input type="hidden" name="studentId" value="@student.Id" />
-                                    <button type="submit" class="btn btn-sm btn-outline-danger">Remove</button>
-                                </form>
+                                @{
+                                    var canRemove = canManage || (isStudent && currentStudentId.HasValue && student.Id == currentStudentId.Value);
+                                }
+                                @if (canRemove)
+                                {
+                                    <form asp-action="RemoveStudent" method="post" class="ms-3">
+                                        <input type="hidden" name="courseId" value="@Model.Course.Id" />
+                                        <input type="hidden" name="studentId" value="@student.Id" />
+                                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                                            @(isStudent && currentStudentId.HasValue && student.Id == currentStudentId.Value ? "Unenroll" : "Remove")
+                                        </button>
+                                    </form>
+                                }
                             </div>
                         }
                     </div>
@@ -80,30 +97,64 @@
         </div>
     </div>
     <div class="col-lg-5">
-        <div class="card shadow-sm">
-            <div class="card-header">
-                <span class="fw-semibold">Assign Student</span>
-            </div>
-            <div class="card-body">
-                @if (!Model.AvailableStudents.Any())
-                {
-                    <div class="text-muted">All students have been assigned.</div>
-                }
-                else
-                {
-                    <form asp-action="AssignStudent" method="post" class="d-flex flex-column gap-3">
+        @if (isStudent && !isEnrolled && currentStudentId.HasValue)
+        {
+            <!-- Student self-enrollment -->
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <span class="fw-semibold">Enroll in Course</span>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted">Click the button below to enroll yourself in this course.</p>
+                    <form asp-action="EnrollSelf" method="post">
                         <input type="hidden" name="courseId" value="@Model.Course.Id" />
-                        <select class="form-select" name="selectedStudentId">
-                            <option value="">-- Select Student --</option>
-                            @foreach (var student in Model.AvailableStudents)
-                            {
-                                <option value="@student.Id">@student.FullName (@student.StudentCode)</option>
-                            }
-                        </select>
-                        <button type="submit" class="btn btn-primary">Add to Course</button>
+                        <button type="submit" class="btn btn-primary w-100">Enroll Now</button>
                     </form>
-                }
+                </div>
             </div>
-        </div>
+        }
+        else if (canManage)
+        {
+            <!-- Admin/Instructor assign student -->
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <span class="fw-semibold">Assign Student</span>
+                </div>
+                <div class="card-body">
+                    @if (!Model.AvailableStudents.Any())
+                    {
+                        <div class="text-muted">All students have been assigned.</div>
+                    }
+                    else
+                    {
+                        <form asp-action="AssignStudent" method="post" class="d-flex flex-column gap-3">
+                            <input type="hidden" name="courseId" value="@Model.Course.Id" />
+                            <select class="form-select" name="selectedStudentId">
+                                <option value="">-- Select Student --</option>
+                                @foreach (var student in Model.AvailableStudents)
+                                {
+                                    <option value="@student.Id">@student.FullName (@student.StudentCode)</option>
+                                }
+                            </select>
+                            <button type="submit" class="btn btn-primary">Add to Course</button>
+                        </form>
+                    }
+                </div>
+            </div>
+        }
+        else if (isStudent && isEnrolled)
+        {
+            <!-- Student already enrolled -->
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <span class="fw-semibold">Enrollment Status</span>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-success">
+                        <strong>✓ You are enrolled in this course.</strong>
+                    </div>
+                </div>
+            </div>
+        }
     </div>
 </div>
