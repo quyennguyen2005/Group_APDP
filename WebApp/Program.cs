@@ -88,3 +88,6 @@ app.MapControllerRoute(
     defaults: new { controller = "Profile", action = "Index" });
 
 app.Run();
+
+// Make Program class accessible for testing (required for WebApplicationFactory)
+public partial class Program { }
