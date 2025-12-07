@@ -29,9 +29,14 @@ Project test automation cho WebApp application.
 
 ## Chạy Tests
 
-### Chạy tất cả tests:
+### ⚡ Cách Nhanh Nhất:
 ```bash
 dotnet test
+```
+
+### ✅ Chạy Unit Tests (Khuyên dùng - hoạt động tốt):
+```bash
+dotnet test --filter "FullyQualifiedName~AuthServiceTests|CourseRepositoryTests"
 ```
 
 ### Chạy tests trong một class cụ thể:
@@ -41,13 +46,16 @@ dotnet test --filter "FullyQualifiedName~AuthServiceTests"
 
 ### Chạy một test cụ thể:
 ```bash
-dotnet test --filter "FullyQualifiedName~AuthServiceTests.LoginAsync_WithValidCredentials_ReturnsSuccess"
+dotnet test --filter "FullyQualifiedName~LoginAsync_WithValidCredentials_ReturnsSuccess"
 ```
 
 ### Chạy với output chi tiết:
 ```bash
 dotnet test --logger "console;verbosity=detailed"
 ```
+
+### 📚 Hướng Dẫn Chi Tiết:
+Xem file `RUN_TESTS.md` và `XUNIT_GUIDE.md` trong thư mục này để biết thêm chi tiết về cách chạy và sử dụng XUnit tests.
 
 ## Dependencies
 
