@@ -11,12 +11,17 @@ public class LoginController : Controller
     {
         // Simple implementation that redirects to Index action in Admin controller
         // For admin user, redirect to Admin Index
-        if (user.UserName == "Admin" && user.Password == "123")
+        if (user.UserName == "Admin" && user.Password == "1234")
         {
+            
             return RedirectToAction("Index", "Admin");
         }
-        
-        return RedirectToAction("Index", "Home");
+        else
+        {
+            // For other users, redirect to Home Index
+            TempData["ErrorMessage"] = "Invalid username or password.";
+        }
+            return RedirectToAction("Index", "Home");
     }
     
     public IActionResult Index()
